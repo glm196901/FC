@@ -4,6 +4,8 @@ import Header from '../common/header/header'
 import Footer from '../common/footer/footer'
 
 import LineTitle from "../component/lineTitle/lineTitle"
+import DownloadIcon from "../component/downloadIcon/downloadIcon"
+import Qrcode from "../component/qrcode/qrcode"
 
 import './home.sass'
 
@@ -180,18 +182,8 @@ class PlatformDownload extends Component{
                     <img className="phone"  src={require("../../assets/images/phone.png")}/>
                 </div>
                 <div className="scanQrcode">
-                    <span className="qrCode"></span>
-                    <span>
-                        <button className="btn">
-                            <img/>
-                            <span></span>
-                        </button>
-                        <button className="btn">
-                            <img/>
-                            <span></span>                        
-                        </button>
-                    </span>
-
+                <Qrcode direction="left" srcIp={require("../../assets/images/iphoneIcon.png") } textIp={"iPhone"} stylesIp={ { color:"#fff"} } 
+                        srcAd={require("../../assets/images/android.png") } textAd={"Android"} stylesAd={ { color:"#fff"} } />
                 </div>
             </div>
         )
@@ -209,19 +201,11 @@ class Partner extends Component{
                 {partnerIcons.map(
                    (partnerIcon,i)=>{
                       return (
-                          <img src={partnerIcon.url}/>
+                          <img src={partnerIcon.url} key={i} />
                     )
                    }
               )}                   
                 </ul>
-                {/* <ul className="partnerIcons">
-                {partnerIcons.map(
-                   (partnerIcon,i)=>{
-                      return (<div key={i}><img src={partnerIcon.url} >
-                      )
-                   }
-              )}                
-                </ul>    */}
             </div>
         )
     }

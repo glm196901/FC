@@ -6,9 +6,11 @@ import Header from '../common/header/header'
 import Footer from '../common/footer/footer'
 
 import LineTitle from '../component/lineTitle/lineTitle'
+import DownloadIcon from '../component/downloadIcon/downloadIcon'
+import Qrcode from '../component/qrcode/qrcode'
 
 import './download.sass'
-import { COMBINATOR } from 'postcss-selector-parser';
+
 
 
 const brights = [
@@ -36,12 +38,27 @@ class BannerTitle extends Component{
     }
 }
 
+class BannerDownload extends Component{
+    render(){
+        return(
+            <div className="bannerDownload">
+                <div className="downloadTop">
+                <Qrcode direction="right" srcIp={require("../../assets/images/iphoneIcon.png") } textIp={"iPhone"} stylesIp={ { color:"#fff"} } 
+                        srcAd={require("../../assets/images/android.png") } textAd={"Android"} stylesAd={ { color:"#fff"} } />
+                </div>
+                <img/>
+            </div>
+        )
+    }
+}
+
 class Banner extends Component{
     render(){
         return(
             <div className={"banner"} >
                  <Header/>     
                 <BannerTitle/>
+                <BannerDownload/>
             </div>
         )
     }
@@ -75,10 +92,10 @@ class BrightDetial extends Component{
                       return (
                           <li key={i} className="brightBox" >
                             <img src={bright.icon} />
-                            <p>
-                                <p className="brightTitle">{bright.title}</p>
-                                <p className="brightText">{bright.text}</p>
-                            </p>
+                            <div>
+                                <div className="brightTitle">{bright.title}</div>
+                                <div className="brightText">{bright.text}</div>
+                            </div>
                           </li>
                     )
                    }
@@ -101,12 +118,18 @@ class Bright extends Component{
 
 
 
+
+
 class PlatformDownload extends Component{
     render(){
         return(
             <div className="PlatformDownload">
                 <LineTitle titleUp="平台下载" titleDown="PLATFORM DOWNLOAD"></LineTitle>
-
+                <div className="downloadBottom">
+                    <DownloadIcon src={require("../../assets/images/iphoneIcon.png") } text={"iPhone"} styles={ {background:"#E7CE7E", color:"#fff"} }/>
+                    <DownloadIcon src={require("../../assets/images/androidY.png") } text={"Android"} styles={ {borderColor:"#E7CE7E", color:"#E7CE7E"} }/>
+                </div>
+                <img className="phoneBig" src={require("../../assets/images/platformDownload.png")} />
             </div>
         )
     }
