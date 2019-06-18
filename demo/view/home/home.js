@@ -21,6 +21,24 @@ const actCard = {
     _3rd:{title:"魔力转圈圈", text:"注册、交易、邀好友都可参与抽奖，玩转期货同时赢取豪礼。"}
 }
 
+const partnerIcons= [
+        {url:require("../../assets/images/shanghai.png")},
+        {url:require("../../assets/images/shanghai.png")},
+        {url:require("../../assets/images/dalian.png")},
+        {url:require("../../assets/images/guoxin.png")},
+        {url:require("../../assets/images/zhongjin.png")},
+        {url:require("../../assets/images/qingdao.png")},
+        {url:require("../../assets/images/yintianxia.png")},
+        {url:require("../../assets/images/yintianxia.png")},
+        {url:require("../../assets/images/zhitian.png")},
+        {url:require("../../assets/images/zhitian.png")},
+        {url:require("../../assets/images/zheshang.png" )},
+        {url:require("../../assets/images/qinghai.png")},
+        {url:require("../../assets/images/haixia.png")},
+        {url:require("../../assets/images/weizhi.png")},
+        {url:require("../../assets/images/tianjiaosuo.png")},
+        {url:require("../../assets/images/tianjiaosuo.png")},
+]
 
 class Banner extends Component{
     render(){
@@ -142,7 +160,7 @@ class Platform extends Component{
                         <span>· 壹击成交、移动止损功能</span>
                         <span>· 安装便捷、占用系统资源小</span>
                     </div>
-                    <div ></div>
+                    <PlatformDownload/>
                 </div>
             </div>
         )
@@ -159,23 +177,58 @@ class PlatformDownload extends Component{
         return(
             <div className="PlatformDownload">
                 <div>
-                    <img className="phone"  src={require("../../assets")}/>
+                    <img className="phone"  src={require("../../assets/images/phone.png")}/>
                 </div>
-                <div >
-                    <div className="qrCode"></div>
-                    <button className="btn">
-                        <img/>
-                        <span></span>
-                    </button>
-                    <button className="btn">
-                        <img/>
-                        <span></span>                        
-                    </button>
+                <div className="scanQrcode">
+                    <span className="qrCode"></span>
+                    <span>
+                        <button className="btn">
+                            <img/>
+                            <span></span>
+                        </button>
+                        <button className="btn">
+                            <img/>
+                            <span></span>                        
+                        </button>
+                    </span>
+
                 </div>
             </div>
         )
     }
 }
+
+
+// 合作伙伴
+class Partner extends Component{
+    render(){
+        return(
+            <div className="partner">
+                <LineTitle titleUp="合作伙伴" titleDown="COOPERATIVE PARTNER" ></LineTitle>
+                <ul className="partnerIcons">
+                {partnerIcons.map(
+                   (partnerIcon,i)=>{
+                      return (
+                          <img src={partnerIcon.url}/>
+                    )
+                   }
+              )}                   
+                </ul>
+                {/* <ul className="partnerIcons">
+                {partnerIcons.map(
+                   (partnerIcon,i)=>{
+                      return (<div key={i}><img src={partnerIcon.url} >
+                      )
+                   }
+              )}                
+                </ul>    */}
+            </div>
+        )
+    }
+}
+
+// 合作伙伴 icon
+
 
 class Contain extends Component{
     render(){
@@ -185,6 +238,7 @@ class Contain extends Component{
                 <HotMarket/>
                 <HotAct/>
                 <Platform/>
+                <Partner/>
             </div>
         )
     }
