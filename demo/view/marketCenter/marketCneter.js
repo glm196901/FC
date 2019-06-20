@@ -8,6 +8,7 @@ import Footer from '../common/footer/footer'
 
 
 import './marketCneter.sass'
+import '../../style/commonStyle/commonStyle.sass'
 
 import TabsControl from '../component/tabControl/tabControl'
     
@@ -74,7 +75,9 @@ class TabComponent extends React.Component{
             <div className="marketCenter">
                 <Banner/>
                 <TabComponent/>
-                {subRoute.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+                <div className="commonStyle">
+                    {subRoute.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+                </div>
                 <Footer/>
             </div>
             )

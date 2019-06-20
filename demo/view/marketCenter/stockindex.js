@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import './stockindex.sass'
 
 import THead from '../component/tHead/tHead'
 
@@ -14,7 +13,7 @@ import THead from '../component/tHead/tHead'
     }  
     render() {
         return (
-            <div className="stockIndex">    
+            <div >    
                 <THead title="股指期货" />
             </div>
         )

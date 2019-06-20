@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom'
 
+import THead from '../component/tHead/tHead'
     
  class Domestic extends Component {
     constructor(props) {
@@ -14,9 +14,7 @@ import {NavLink} from 'react-router-dom'
     render() {
         return (
             <div>
-                <p>
-                     这里是domestic
-                </p>
+                <THead title="国内期货"/>
             </div>
         )
     }

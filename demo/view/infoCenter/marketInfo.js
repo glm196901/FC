@@ -1,4 +1,9 @@
 import React, {Component} from 'react';
+import {EVENT} from "../../../../pro/event";
+
+
+
+import '../../style/commonStyle/commonStyle.sass'    
 
     
  class MarketInfo extends Component {
@@ -12,10 +17,8 @@ import React, {Component} from 'react';
 
     render() {
         return (
-            <div>MarketInfoadaadadadasda打
-                adadasdas大声道啊啊犯法四大神兽撒打算打打asddasadas
-                asdasdasdasada
-                asdasdasdasada
+            <div className="commonStyle">
+                xcsdsad
             </div>
         )
     }

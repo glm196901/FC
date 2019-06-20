@@ -142,8 +142,8 @@ class MonthView extends Component{
         month = completeNum(month);
         let day = date.getDate();
         day = completeNum(day);
+       
         //todo 计算当前月的时常
-
         let obj = {};
         obj.show = day;
         obj.val = year.toString() + month.toString() + day.toString();
@@ -165,7 +165,7 @@ class MonthView extends Component{
     }
 
     render() {
-        console.log('lllllll')
+        // console.log('lllllll')
 
           const columns = [
             {
@@ -183,7 +183,7 @@ class MonthView extends Component{
             },
             {
              title: '今值',
-             dataIndex: 'actual',
+             dataIndex: 'a  ctual',
             },
             {
              title: '预期',
@@ -210,7 +210,6 @@ class MonthView extends Component{
                 
                 <Table  columns={ columns} dataSource={ this.state.calender } pagination={{ pageSize: 20, showQuickJumper:true }} locale={{emptyText:"获取中"}} />    
                         
-                            
             </div>
         )
     }
