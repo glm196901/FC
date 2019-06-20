@@ -7,7 +7,7 @@ import 'antd/dist/antd.css'
 
 
 import { Menu, Dropdown, Icon } from 'antd';
-import { IPv4 } from 'ipaddr.js';
+
 
 
 // const ip = "http://localhost:3000"
@@ -32,13 +32,13 @@ const introduce = (
   const marketCenter = (
     <Menu>
       <Menu.Item>
+        <NavLink  to="/marketcenter/international">国际行情</NavLink>
+      </Menu.Item>      
+      <Menu.Item>
         <NavLink to="/marketcenter/stockindex">股指期数</NavLink>
       </Menu.Item>
       <Menu.Item>
         <NavLink  to="/marketcenter/domestic">国内行情</NavLink>
-      </Menu.Item>
-      <Menu.Item>
-        <NavLink  to="/marketcenter/international">国际行情</NavLink>
       </Menu.Item>
     </Menu>
   );

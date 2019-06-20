@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
-    
+import './stockindex.sass'
+
+import THead from '../component/tHead/tHead'
+
  class StockIndex extends Component {
     constructor(props) {
         super(props);
@@ -8,11 +11,12 @@ import React, {Component} from 'react';
 
         };
 
-    }
-    
+    }  
     render() {
         return (
-            <div>StockIndex</div>
+            <div className="stockIndex">    
+                <THead title="股指期货" />
+            </div>
         )
     }
 

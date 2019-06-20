@@ -56,20 +56,6 @@ class TabComponent extends React.Component{
 
 
 
-class Contain extends Component{
-    render(){
-        return(
-            <div className={"contain"}>
-                奥术大师大所大大所大所多
-            </div>
-        )
-    }
-}
-
-
-
-
-
  class InfoCenter extends Component {
     constructor(props) {
         super(props);
@@ -88,8 +74,6 @@ class Contain extends Component{
                 <Banner/>
                 <TabComponent/>
                 {subRoute.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-                <Contain/>
-
                 <Footer/>
             </div>
             )

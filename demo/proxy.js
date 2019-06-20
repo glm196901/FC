@@ -11,12 +11,12 @@ module.exports = function (app) {
     //     secure:false
     // }));
     app.use(proxy('/api',{
-        target:'https://fk.hksuppliers.com/',
+        target:'https://fk.wanzhuan7h.com/',
         changeOrigin:true,
         secure:false
     }));
     app.use(proxy('/api/*',{
-        target:'https://fk.hksuppliers.com/',
+        target:'https://fk.wanzhuan7h.com/',
         changeOrigin:true,
         secure:false
     }));
