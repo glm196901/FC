@@ -3,9 +3,8 @@
 	padding: 0;
 }
 .container{
-	/* width: 100%;
-	height: 340px; */
-	font-size: 0.9vw
+	font-size: 0.9vw;
+	background: #ffffff
 }
 .tab_title_wrap{
     margin: 0 auto;

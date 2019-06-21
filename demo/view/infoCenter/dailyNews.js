@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { Table, Rate, Button, Radio, Icon } from 'antd';
+import {EVENT} from './../../../../pro/event/index'
+
     
 
 import { completeNum } from '../../../../lib/utils';
@@ -15,7 +17,6 @@ import 'antd/dist/antd.css';
 
 
 import { Pagination } from 'antd';
-import {EVENT} from './../../../../pro/event/index'
 
 
 
@@ -183,7 +184,7 @@ class MonthView extends Component{
             },
             {
              title: '今值',
-             dataIndex: 'a  ctual',
+             dataIndex: 'actual',
             },
             {
              title: '预期',

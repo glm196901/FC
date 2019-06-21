@@ -34,16 +34,9 @@ class TabComponent extends React.Component{
         return(
             <div className="container">
                 <TabsControl>
-
-                    <div add="/infocenter/marketinfo" name="行情资讯">
-                        社会新闻的内容
-                    </div>
-                    <div add="/infocenter/dailynews" name="财经日历">
-                        体育世界的内容
-                    </div>
-                    <div add="/infocenter/everyweek" name="每周洞察">
-                        娱乐圈的内容
-                    </div>
+                    <div add="/infocenter/marketinfo" name="行情资讯"></div>
+                    <div add="/infocenter/dailynews" name="财经日历"></div>
+                    <div add="/infocenter/everyweek" name="每周洞察"></div>
                 </TabsControl>
             </div>
             );

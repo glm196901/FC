@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {EVENT} from "../../../../pro/event";
+import {EVENT} from "../../../../pro/event/index";
 import { completeNum } from '../../../../lib/utils';
 import THead from '../component/tHead/tHead'
 import ReactDOM from 'react-dom';
@@ -67,11 +67,8 @@ import './everyWeek.sass'
                                                 <div className="currentTime">{data.date.split(" ")[1].slice(0,5)}</div>
                                                 <div dangerouslySetInnerHTML={{__html:data.content}}></div>
                                             </div>
-
-                                        </Timeline.Item>
-                                  
-                                        )
-                             })}
+                                        </Timeline.Item>)
+                        })}
                     </Timeline>
 
     
