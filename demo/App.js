@@ -9,7 +9,9 @@ import Footer from '../demo/view/common/footer/footer'
 
 import RouteWithSubRoutes from '../../core/router/router';
 
-import './index.css'
+import './index.css';
+
+import '../../lib/prototype'
 
 // 此处全局路由
 class App extends Component {

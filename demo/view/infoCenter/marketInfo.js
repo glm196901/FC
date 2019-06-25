@@ -1,85 +1,72 @@
 import React, {Component} from 'react';
 import {EVENT} from "../../../../pro/event/index";
 import ReactDOM from 'react-dom';
-import { Pagination } from 'antd';
+import { Button, Icon} from 'antd';
+import {NavLink} from 'react-router-dom'
+import {hashHistory} from 'react-router-dom';
 
 
+import {Req} from "../../../../pro/network/Req";
 
 import '../../style/commonStyle/commonStyle.sass'    
 import './marketInfo.sass'
+
+
+
+
 
 class News extends Component{
     constructor(props) {
         super(props);
         this.state = {
             detial:[],
-            list:[]
+            list:[],
+            date:[],
+            id:null,
+            path:"",
+            lastestId:null
         };
-
     }
 
-
-
-
-    async componentDidMount() {
-        this.updateNews(0)
-
-    }
-
-    async updateNews(type,date,animate=false){
-        try {
-            await EVENT.Info.updateNews(type,date,animate);
-            if (!!date) {
-                //加载更多
-                let data = this.state.list.concat(EVENT.Info.newsList);
-                this.setState({list:data});
-            } else {
-                //刷新
-                this.setState({list:EVENT.Info.newsList});
-                this.state.list.map((data, i)=>{
-                    this.getNewsDetail(data.id)
-
-                })
+     async updateNews(type,date,size,animate = false){
+        this.setState({list:[]});
+        this.setState({id:null});
+        
+        return new Promise(async (resolve,reject)=>{
+            try {
+                const result = await Req({
+                    url: '/api/news/newsList.htm',
+                    type: 'GET',
+                    data: {
+                        type: type,
+                        date: date,
+                        size: size
+                    },
+                    animate: animate
+                });
+                this.newsList = result.newsList;
+                console.log(this.newsList)
+                this.setState({date:[this.newsList[0].date, this.newsList[7].date]});
+                let data = this.state.list.concat(this.newsList);
+                this.setState({list: data, lastestId: data[0].id});
+                console.log(this.state.date)
+                this.forceUpdate()
+                resolve()
+            } catch (error) {
+                reject(error)
             }
-        } catch (error) {
-            EVENT.Error.throw(error);
-        }
-    }
+        })
 
-    async getNewsDetail(type,date,animate=false){
-        try {
-            await EVENT.Info.getNewsDetail(type,date,animate);
-            if (!!date) {
-                //加载更多
-                let detial = this.state.detial.concat(EVENT.Info.newsDetail);
-                this.setState({detial:detial});
-
-            } else {
-                //刷新
-                this.setState({detial:EVENT.Info.newsDetail});
-
-                // console.log(this.state.detial)
-            }
-        } catch (error) {
-            EVENT.Error.throw(error);
-        }
-    }
-
-    click = () => {         
-            let i
-             console.log(i)  
-             console.log(this.state.list) 
     }
 
 
-      
+    async componentWillMount() {
 
+        this.updateNews(0,null,8)
+    }
+
+    
     render(){
-
-        function onChange(pageNumber) {
-            console.log('Page: ', pageNumber);
-            alert(pageNumber)
-          }
 
         return(
             <div className="news">
@@ -88,19 +75,19 @@ class News extends Component{
                         if(i<3){                      
                             return(
 
-                                <div  key={i} className="newsTop3" onClick={ ()=> console.log(list.id)}>
+                                <NavLink  to={this.state.path}   key={i} className="newsTop3"  onMouseEnter={ ()=> this.setState({id:list.id, path:`/infocenter/infodetials&${list.id}&<=${this.state.lastestId}`}) }   >
                                     <img className="imgTop3" src={ list.thumb } />
                                     <div className="titleTop3" style={ {background: "rgba(0,0,0,0.4) " } }>
                                         <marquee >
                                             {list.title}
                                         </marquee>
                                     </div>
-                          
-                                </div>
+                                </NavLink>
+                                
                             )
                         }else{
                             return(
-                                <div   key={i} className="newsContent" onClick={ ()=> console.log(list.id)}  >
+                                <NavLink  to={this.state.path}   key={i} className="newsContent" onMouseEnter={ ()=> this.setState({id:list.id, path:`/infocenter/infodetials&${list.id}&<=${this.state.lastestId}`}) }  >
                                     <img className="imgrest" src={ list.thumb }/>
                                     <div className="titleText">
                                         <div className="titleRest">
@@ -111,23 +98,19 @@ class News extends Component{
                                         </div>
                                     </div>
 
-                                </div>
+                                </NavLink>
                                 )
                         }
                     })                       
                 }
-                              <Pagination 
-            
-            current={0}
-             pageSize={20}
-             defaultPageSize={20}
-            total={this.state.list.length}
-             pageSizeOptions={["8"]}
-             onChange={this.changeNum}
-             onShowSizeChange={this.changePageSize}
-             showSizeChanger
-             showTotal={(e)=>{return "共 "+e+" 条"}}
-            />
+                <Button.Group className="pageBtn">
+                        <Button className="pre" onClick={   ()=> { this.updateNews(0,this.state.date[0],8)} } type="primary">
+                            <Icon type="left" />上一页
+                        </Button>
+                        <Button className="next" onClick={  ()=> { this.updateNews(0,this.state.date[1],8)} } type="primary">
+                            下一页<Icon type="right" />
+                        </Button>
+                </Button.Group>
             </div>
             
         )
@@ -144,6 +127,7 @@ class News extends Component{
     }
 
     async getNewsDetail(type,date,animate=false){
+
         try {
             await EVENT.Info.getNewsDetail(type,date,animate);
             if (!!date) {
@@ -160,13 +144,10 @@ class News extends Component{
         }
     }
 
-
-
     render() {
         return (
             <div className="commonStyle">
                 <News  />
-  
             </div>
         )
     }

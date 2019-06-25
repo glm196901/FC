@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 
+
 import Header from '../common/header/header'
 import Footer from '../common/footer/footer'
 
 import LineTitle from "../component/lineTitle/lineTitle"
-import DownloadIcon from "../component/downloadIcon/downloadIcon"
 import Qrcode from "../component/qrcode/qrcode"
+import ChartBar from '../component/chart/chartView/chartBar'
+
 
 import './home.sass'
 
@@ -99,9 +101,7 @@ class HotMarket extends Component{
     render(){
         return(
             <div className="hotMarket">
-                <div className="hotgraph">
-                    行情
-                </div>
+                <ChartBar/>
             </div>
         )
     }

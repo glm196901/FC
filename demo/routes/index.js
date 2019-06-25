@@ -19,6 +19,7 @@ import StockIndex from '../view/marketCenter/stockindex'
 
 //资讯中心
 import MarketInfo from '../view/infoCenter/marketInfo'
+import InfoDetials from '../view/infoCenter/infoDetials'
 import EveryWeek from '../view/infoCenter/everyWeek'
 import DailyNews from '../view/infoCenter/dailyNews'
 
@@ -79,6 +80,10 @@ export default [
             {
                 path: '/infocenter/marketinfo',
                 component: MarketInfo,
+            },
+            {
+                path: '/infocenter/infodetials:id',
+                component: InfoDetials,
             },
             {
                 path: '/infocenter/dailynews',
