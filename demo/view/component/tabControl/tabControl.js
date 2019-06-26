@@ -45,7 +45,26 @@ class TabsControl extends React.Component{
 						}
 				</div>
 			)
-		}else{
+		}else if(route.includes("introduce")){
+			return(
+            
+				<div>
+					{ /* 动态生成Tab导航 */ }
+					<div className="tab_title_wrap">
+						{ 
+							React.Children.map( _this.props.children , ( element,index ) => {
+								return(
+									<NavLink style={ { width:"50%" } }  to={element.props.add} onClick={ () => { _this.setState({ currentIndex : index }) } } className={ _this.check_title_index( index ) }>{ element.props.name} </NavLink>
+									)
+							}) 
+						}
+	
+					</div>
+				</div>
+			)			
+
+		}
+		else{
 			return(
             
 				<div>
@@ -62,17 +81,6 @@ class TabsControl extends React.Component{
 						}
 	
 					</div>
-					{ /* Tab内容区域 */ }
-					{/* <div className="tab_item_wrap">
-						{
-							React.Children.map(this.props.children,( element,index )=>{
-								return(
-									<div className={ this.check_item_index( index ) }>{ element }</div>
-								)
-							})
-						}
-					</div> */}
-	
 				</div>
 			)
 		}

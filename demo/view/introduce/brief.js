@@ -97,7 +97,7 @@ class ModuleCulture extends Component{
                  </div>
                 <div className="sum">
                     <p >
-                        公司坚持诚信务实，稳健经营、规范管理，切实的站在客户的立场．从客户的利益出发．确保客户资金和交易信息的安全，从而实现双赢。公司
+                    <span className="common charStart">“</span> 公司坚持诚信务实，稳健经营、规范管理，切实的站在客户的立场．从客户的利益出发．确保客户资金和交易信息的安全，从而实现双赢。公司
                     </p>
                     <p>
                         秉承“诚信、专业、创新、发展”的经营理念，以风险控制为前提、以市场为导向、以客户为中心、以效益为目标，追求可持续发展，
@@ -105,8 +105,8 @@ class ModuleCulture extends Component{
                     <p>
                         力争发展成为“资本充足、运作安全、管理规范、服务优质、效益良好、有核心竞争力”的现代金融服务企业。    
                     </p>
-                    <p>
-                        传播期货知识，培养和成就投资人，与客户共同成长。
+                    <p style={{ marginTop: "-1.5vw"}}>
+                        传播期货知识，培养和成就投资人，与客户共同成长。<span className="common charEnd">”</span> 
                     </p>
                 </div>
 

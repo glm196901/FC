@@ -19,9 +19,9 @@ const introduce = (
       <Menu.Item>
         <NavLink to="/introduce/brief">公司简介</NavLink>
       </Menu.Item>      
-      <Menu.Item>
+      {/* <Menu.Item>
         <NavLink to="/introduce/dynamics">公司动态</NavLink>
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item>
         <NavLink to="/introduce/advantages">公司优势</NavLink>
       </Menu.Item>
@@ -64,6 +64,7 @@ class Header extends Component {
     render() {
         return (
                 <div className={"navBox"}>
+                    <img className="cfLogo" src={require("../../../assets/images/cfLogo.png")} />
                     <ul className={"navBar"}>
                         <li>
                             <NavLink exact to="/">首页</NavLink>
@@ -91,9 +92,6 @@ class Header extends Component {
                         </li>
                         <li>
                             <NavLink to="/download">下载软件</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/connection">联系我们</NavLink>
                         </li>
                     </ul>
                 </div>

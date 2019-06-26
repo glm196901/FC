@@ -63,7 +63,8 @@ import './chartBar.sass'
                 code: code,
                 height: this._ref.scrollHeight,
                 width: this._ref.scrollWidth,
-                contract: Contracts
+                contract: Contracts,
+                preset: 'mobiole'
             });
             Quote.start('quoteUpdate', code);
         });
@@ -76,7 +77,9 @@ import './chartBar.sass'
                     code: code, 
                     height: this._ref.scrollHeight,
                     width: this._ref.scrollWidth,
-                    contract: Contracts
+                    contract: Contracts,
+                    preset: 'mobiole'
+
                 });
                 Quote.start('quoteUpdate', code);
             }
@@ -266,7 +269,7 @@ class ChartBar extends Component {
                     </div>
                     {this.state.names.map( (name,key)=>{
                         return(
-                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}) }  }  >{ name }</div>
+                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}, ()=>{console.log(key)} ) }  }  >{ name }</div>
                         )
                     } )}
                 </div>

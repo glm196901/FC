@@ -29,34 +29,19 @@ class Banner extends Component{
 
 class TabComponent extends React.Component{
 
-    
+   
     render(){
-        
-
         return(
             <div className="container">
-                <TabsControl>
-                    <div add="/introduce/brief" name="公司简介">
-                    </div>
-                    <div add="/introduce/dynamics" name="公司动态">
-                    </div>
-                    <div add="/introduce/advantages" name="公司优势">
-                    </div>
+                <TabsControl style={ { width:"50%" } }>
+                    <div  add="/introduce/brief" name="公司简介"></div>
+                    <div  add="/introduce/advantages" name="公司优势"></div>
                 </TabsControl>
             </div>
             );
     }
 }
 
-
-class Contain extends Component{
-    render(){
-        return(
-            <div className={"contain"}>
-            </div>
-        )
-    }
-}
 
 
  class Introduce extends Component {
