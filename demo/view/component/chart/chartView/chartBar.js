@@ -7,7 +7,7 @@ import {Contracts, Custom, Quote} from "../../../../../../pro/contract";
 import {EVENT} from "../../../../../../pro/event";
 import {STORE} from "../../../../../../core/store/state";
 
-
+import ResolutionRatio from '../chartView/resolutionRatio'
 
 
 import './chartBar.sass'
@@ -27,6 +27,7 @@ import './chartBar.sass'
             name:'',
             goodsCode:'',
             itemActive: 0,
+            dynamic: 'hide',
 
 
         };
@@ -42,7 +43,7 @@ import './chartBar.sass'
             this.state.goodsCode = o.code;
             this.state.hot = Contracts.hot;
             this.state.news = Contracts.new;
-            console.log(this.state.foreignArray)
+            // console.log(this.state.foreignArray)
             Custom.start('customUpdate');
         } else {
             spy('contractsInitial', this.updateContracts, this, Contracts.initial);
@@ -64,7 +65,7 @@ import './chartBar.sass'
                 height: this._ref.scrollHeight,
                 width: this._ref.scrollWidth,
                 contract: Contracts,
-                preset: 'mobiole'
+                preset: 'mobile'
             });
             Quote.start('quoteUpdate', code);
         });
@@ -78,7 +79,7 @@ import './chartBar.sass'
                     height: this._ref.scrollHeight,
                     width: this._ref.scrollWidth,
                     contract: Contracts,
-                    preset: 'mobiole'
+                    preset: 'mobile'
 
                 });
                 Quote.start('quoteUpdate', code);
@@ -115,7 +116,7 @@ import './chartBar.sass'
             allArray: JSON.parse(JSON.stringify(Custom.allBrief)),
             hot: Contracts.hot,
             news: Contracts.new
-        },()=>console.log(this.state.foreignArray));
+        });
         Custom.start('customUpdate')
     }
 
@@ -173,7 +174,7 @@ import './chartBar.sass'
                                    {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
                                </div>
                                <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
-                                   <span>{v.difference + ""} </span>
+                                   <span>{v.gap + ""} </span>
                                    <span>{v.rate}</span>
                                </div>
                            </div>
@@ -199,7 +200,7 @@ import './chartBar.sass'
                                    {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
                                </div>
                                <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
-                                   <span>{v.difference + ""} </span>
+                                   <span>{v.gap + ""} </span>
                                    <span>{v.rate}</span>
                                </div>
                            </div>
@@ -225,16 +226,17 @@ import './chartBar.sass'
                                    {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
                                </div>
                                <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
-                                   <span>{v.difference + ""} </span>
+                                   <span>{v.gap + ""} </span>
                                    <span>{v.rate}</span>
                                </div>
                            </div>
                        )
                    }) }
                    </div>
-                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}>
-   
-                   </div>
+                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}></div>
+             
+
+              
                 </div>
             )               
          }
@@ -269,13 +271,15 @@ class ChartBar extends Component {
                     </div>
                     {this.state.names.map( (name,key)=>{
                         return(
-                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}, ()=>{console.log(key)} ) }  }  >{ name }</div>
+                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}) }  }  >{ name }</div>
                         )
                     } )}
                 </div>
                 {this.state.select === 0 ? <ViewBar name="国际期货"></ViewBar> : ""}
                 {this.state.select === 1 ? <ViewBar name="股指期货"></ViewBar> : ""}
                 {this.state.select === 2 ? <ViewBar name="国内期货"></ViewBar> : ""}
+                <ResolutionRatio dynamic={(status)=>this.setState({dynamic: status})}/>
+
             </div>
         )
     }

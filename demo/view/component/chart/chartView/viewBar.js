@@ -144,7 +144,7 @@ import './viewBar.sass'
                                {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
                            </div>
                            <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
-                               <span>{v.difference + ""} </span>
+                               <span>{v.gap + ""} </span>
                                <span>{v.rate}</span>
                            </div>
                        </div>

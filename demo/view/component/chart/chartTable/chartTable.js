@@ -75,19 +75,19 @@ import {EVENT} from "../../../../../../pro/event";
                   let up = {color : "#F14F55"}
                   let down = {color : "#48B30F"  }
                   return (
-                      <div style={key.isUp === false? down : up}>{key.isUp=== false ? price + "⬇"  :  price +"⬆" }</div>
+                      <div key={key} style={key.isUp === false? down : up}>{key.isUp=== false ? price + "⬇"  :  price +"⬆" }</div>
                   )
               }
             },
             {
               title: '涨跌',
-              dataIndex : "difference",
-              render: (difference) => {
-                  let diff = Object(difference)[0]
+              dataIndex : "gap",
+              render: (gap) => {
+                  let diff = Object(gap)[0]
                     let up = {color : "#F14F55"}
                     let down = {color : "#48B30F"}
                     return(
-                        <div style={diff === "+" ? up : down } key={difference}>{difference}</div>
+                        <div style={diff === "+" ? up : down } key={gap}>{gap}</div>
                     )
               }
             },
@@ -152,7 +152,7 @@ import {EVENT} from "../../../../../../pro/event";
             allArray: JSON.parse(JSON.stringify(Custom.allBrief)),
             hot: Contracts.hot,
             news: Contracts.new
-        },()=>console.log(this.state.foreignArray));
+        });
         Custom.start('customUpdate')
     }
 
@@ -176,7 +176,7 @@ import {EVENT} from "../../../../../../pro/event";
                     }
                 })
             });
-                console.log(Custom.stockBrief)
+                // console.log(Custom.stockBrief)
 
             Custom.domesticBrief.map((newItem, newIndex) => {
                 state.domesticArray.map((item, index) => {
