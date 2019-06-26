@@ -1,0 +1,31 @@
+.viewBar   
+    padding: 1vw 0
+    .viewSelect
+        height: 4.5vw
+        display: flex
+        overflow-x: scroll  
+        .item
+            margin: 0 1vw 
+            .up
+                color: #F14F55
+            .down
+                color: #48B30F   
+            .itemTitle
+                font-size: 0.7vw
+                font-weight: bold  
+                color: #fff    
+            .changeDegree
+                font-size: 0.7vw
+                &.span
+                    margin-right: 0.5vw
+            .itemPrice
+                font-size: 1.3vw
+                width: 6vw
+        .item:hover  
+            border-bottom: 2px solid #E7CE7E      
+        .bottomColor
+            border-bottom: 2px solid #E7CE7E
+        .bottomNoColor
+            border-bottom: none 
+    .viewSelect::-webkit-scrollbar 
+        display: none                             

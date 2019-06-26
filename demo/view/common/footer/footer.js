@@ -37,9 +37,7 @@ class NavContain extends Component {
               </li>
               <li>{navItem.list4}</li>
             </ul>
-            {/* <Router>
-              <Redirect to="/"></Redirect>
-            </Router> */}
+
           </ul>        
       )
     }
@@ -52,6 +50,16 @@ class Nav extends Component {
         return (
               <div className={"nav"} style={{ height:"12vw" }}>
                 {navItems.map((navItem,i) => <NavContain key={i} navItem={navItem} />)}
+                <div className="downloadFooter">
+                  <div>
+                    <img src={require("../../../assets/images/iosQr.png")} />
+                    <p>苹果下载</p>
+                  </div>
+                  <div>
+                    <img src={require("../../../assets/images/andriodQr.png")} />
+                    <p>安卓下载</p>
+                  </div>
+                </div>
               </div>
         );
     }

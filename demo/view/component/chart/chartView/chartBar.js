@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
 
-import Chart from '../../../../../../pro/chartTV/chart'
+import {Chart} from '../../../../../../pro/chartTV/chart'
 import {exposure, spy} from "../../../../../../core/store";
-import {Contracts, Custom} from "../../../../../../pro/contract";
+import {Contracts, Custom, Quote} from "../../../../../../pro/contract";
 import {EVENT} from "../../../../../../pro/event";
+import {STORE} from "../../../../../../core/store/state";
+
 
 
 
@@ -40,6 +42,7 @@ import './chartBar.sass'
             this.state.goodsCode = o.code;
             this.state.hot = Contracts.hot;
             this.state.news = Contracts.new;
+            console.log(this.state.foreignArray)
             Custom.start('customUpdate');
         } else {
             spy('contractsInitial', this.updateContracts, this, Contracts.initial);
@@ -48,19 +51,50 @@ import './chartBar.sass'
      }
 
      componentDidMount(){
+        spy('customUpdate',this.updateBrief,this);
         EVENT.Quote.whileUpdated(()=>{
             this.setState(EVENT.Quote.getDynamic())
         },this)
+
+        STORE.listener(STORE.STATE.CONTRACTS).emitter(()=>{
+            let code = EVENT.Quote.code;
+            Chart.init({
+                dom: 'chart',
+                code: code,
+                height: this._ref.scrollHeight,
+                width: this._ref.scrollWidth,
+                contract: Contracts
+            });
+            Quote.start('quoteUpdate', code);
+        });
+
+        EVENT.Quote.whileUpdated((val) => {
+            if (val === 'init') {
+                let code = EVENT.Quote.code;
+                Chart.init({
+                    dom: 'chart',
+                    code: code, 
+                    height: this._ref.scrollHeight,
+                    width: this._ref.scrollWidth,
+                    contract: Contracts
+                });
+                Quote.start('quoteUpdate', code);
+            }
+            if (val === 'switch') {
+                Chart.swap({
+                    code: EVENT.Quote.code
+                });
+                Quote.switch(EVENT.Quote.code)
+            }
+        }, this);
+       
+
     }
 
     componentWillUnmount(){
         EVENT.Quote.pullout(this)
-    }
+        Chart.exit();
 
-
-
-    componentDidMount() {
-        spy('customUpdate',this.updateBrief,this);
     }
 
 
@@ -102,8 +136,6 @@ import './chartBar.sass'
                     }
                 })
             });
-                console.log(Custom.stockBrief)
-
             Custom.domesticBrief.map((newItem, newIndex) => {
                 state.domesticArray.map((item, index) => {
                     if (index === newIndex) {
@@ -123,34 +155,87 @@ import './chartBar.sass'
     }
 
 
-
-
      render(){
-         return(
-             <div className="viewBar">
-                <div  className="viewSelect"  >
-                {this.state.foreignArray.map((v, k )=>{
-                    return(
-                        <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{ console.log(v) }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
-                            <div className="itemTitle">
-                                {v.name}
-                            </div>
-                            <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
-                                {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
-                            </div>
-                            <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
-                                <span>{v.difference + ""} </span>
-                                <span>{v.rate}</span>
-                            </div>
-                        </div>
-                    )
-                }) }
+         if(this.props.name === "国际期货"){
+            return(
+                <div className="viewBar">
+                   <div  className="viewSelect"  >
+                   {this.state.foreignArray.map((v, k )=>{
+                       return(
+                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)}) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                               <div className="itemTitle">
+                                   {v.name}
+                               </div>
+                               <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
+                                   {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
+                               </div>
+                               <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
+                                   <span>{v.difference + ""} </span>
+                                   <span>{v.rate}</span>
+                               </div>
+                           </div>
+                       )
+                   }) }
+                   </div>
+                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}>
+   
+                   </div>
                 </div>
-                <div  className="viewItem">
-                    {this.props.name}
+            )
+         }else if(this.props.name === "股指期货"){
+            return(
+                <div className="viewBar">
+                   <div  className="viewSelect"  >
+                   {this.state.stockArray.map((v, k )=>{
+                       return(
+                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)}) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                               <div className="itemTitle">
+                                   {v.name}
+                               </div>
+                               <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
+                                   {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
+                               </div>
+                               <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
+                                   <span>{v.difference + ""} </span>
+                                   <span>{v.rate}</span>
+                               </div>
+                           </div>
+                       )
+                   }) }
+                   </div>
+                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}>
+   
+                   </div>
                 </div>
-             </div>
-         )
+            )               
+         }else {
+            return(
+                <div className="viewBar">
+                   <div  className="viewSelect"  >
+                   {this.state.domesticArray.map((v, k )=>{
+                       return(
+                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)}) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                               <div className="itemTitle">
+                                   {v.name}
+                               </div>
+                               <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
+                                   {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
+                               </div>
+                               <div className={`changeDegree ${v.isUp === true ? 'up' : 'down' }`}>
+                                   <span>{v.difference + ""} </span>
+                                   <span>{v.rate}</span>
+                               </div>
+                           </div>
+                       )
+                   }) }
+                   </div>
+                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}>
+   
+                   </div>
+                </div>
+            )               
+         }
+
      }
 
 
@@ -168,8 +253,6 @@ class ChartBar extends Component {
             names:["国际期货", "股指期货", "国内期货"],
             select: 0,
             active: true,
-            color : {background : "rgba(231,206,126,0.5)"},
-            none: {background : "" }
         }
     }
 
@@ -187,9 +270,9 @@ class ChartBar extends Component {
                         )
                     } )}
                 </div>
-                {this.state.select === 0 ? <ViewBar name={this.state.names[0]}></ViewBar> : ""}
-                {this.state.select === 1 ? <ViewBar name={this.state.names[1]}></ViewBar> : ""}
-                {this.state.select === 2 ? <ViewBar name={this.state.names[2]}></ViewBar> : ""}
+                {this.state.select === 0 ? <ViewBar name="国际期货"></ViewBar> : ""}
+                {this.state.select === 1 ? <ViewBar name="股指期货"></ViewBar> : ""}
+                {this.state.select === 2 ? <ViewBar name="国内期货"></ViewBar> : ""}
             </div>
         )
     }

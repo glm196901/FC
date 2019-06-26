@@ -6,11 +6,11 @@ import Footer from '../common/footer/footer'
 
 import LineTitle from "../component/lineTitle/lineTitle"
 import Qrcode from "../component/qrcode/qrcode"
-import ChartBar from '../component/chart/chartView/chartBar'
+import  ChartBar   from '../component/chart/chartView/chartBar'
 
 
 import './home.sass'
-
+import ViewBar from "../component/chart/chartView/viewBar"
 
 const advCard = {
     _1st:{title:"0元注册开户", text:"下单快速，提款方便，不错过任何一次机会"},
@@ -49,6 +49,9 @@ class Banner extends Component{
         return(
             <div className={"banner"} >
                 <Header/>
+                <div className="headerViewBar">
+                <ViewBar />
+                </div>
             </div>
         )
     }

@@ -3,7 +3,7 @@ import routes from './routes';
 import noMatch from '../../core/router/404';
 
 import {BrowserRouter  as Router, Route, NavLink, Switch,Redirect} from 'react-router-dom'
-import Home from '../demo/view/home/home'
+import Home from './view/home/home'
 import Header from '../demo/view/common/header/header'
 import Footer from '../demo/view/common/footer/footer'
 

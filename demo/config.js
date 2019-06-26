@@ -8,5 +8,5 @@ module.exports = {
     * TV:tradingview
     * IQ:chartIQ
     */
-    chart:'IQ'
+    chart:'TV'
 };
