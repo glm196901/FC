@@ -11,6 +11,7 @@ import {EVENT} from "../../../../../../pro/event";
 
 
  class ChartTable extends Component {
+     mount = true
      constructor(props){
         super(props);
         this.state = {
@@ -23,8 +24,10 @@ import {EVENT} from "../../../../../../pro/event";
             contract:'',
             name:'',
             goodsCode:''
+            
 
         };
+
         if (Contracts.initial) {
             this.state.foreignArray = Custom.foreignBrief;
             this.state.stockArray = Custom.stockBrief;
@@ -44,14 +47,17 @@ import {EVENT} from "../../../../../../pro/event";
 
 
      }
+     
      componentDidMount(){
         EVENT.Quote.whileUpdated(()=>{
             this.setState(EVENT.Quote.getDynamic())
         },this)
+        this.mount = true
     }
 
     componentWillUnmount(){
         EVENT.Quote.pullout(this)
+        this.mount = false
     }
 
 
@@ -65,6 +71,7 @@ import {EVENT} from "../../../../../../pro/event";
             {
               title: '商品名称',
               dataIndex: "name",
+              key:"name"
               
             },
             {
@@ -82,6 +89,7 @@ import {EVENT} from "../../../../../../pro/event";
             {
               title: '涨跌',
               dataIndex : "gap",
+              key:"gap",
               render: (gap) => {
                   let diff = Object(gap)[0]
                     let up = {color : "#F14F55"}
@@ -94,6 +102,7 @@ import {EVENT} from "../../../../../../pro/event";
             {
              title: '涨跌幅',
              dataIndex: 'rate',
+             key:"rate",
              render: rate => {
                 let diff = Object(rate)[0]
                   let up = {color : "#F14F55"}
@@ -106,14 +115,17 @@ import {EVENT} from "../../../../../../pro/event";
             {
              title: '最低',
              dataIndex: 'min',
+             key:"min"
             },
             {
             title: '最高',
-                dataIndex: 'max',
+            dataIndex: 'max',
+            key:"max"
            },
            {
             title: '持仓',
-                dataIndex: 'holdVolume',
+            dataIndex: 'holdVolume',
+            key:"holdVolume"
            }
           ]
 
@@ -123,9 +135,9 @@ import {EVENT} from "../../../../../../pro/event";
                 <main>
                     <div className={'mainLeft'}>
                         <div className={'quotationBox'}>
-                            {this.props.name === "国际期货"?  <Table  pagination={false}  columns={ quotation} dataSource={ this.state.foreignArray } locale={{emptyText:"获取中"}} /> : "" }  
-                            {this.props.name === "股指期货"?  <Table  pagination={false}  columns={ quotation} dataSource={ this.state.stockArray }  locale={{emptyText:"获取中"}} /> : "" }  
-                            {this.props.name === "国内期货"?  <Table  pagination={false} columns={ quotation} dataSource={ this.state.domesticArray }  locale={{emptyText:"获取中"}} /> : "" }  
+                            {this.mount && this.props.name === "国际期货"?  <Table  pagination={false}  columns={ quotation} dataSource={ this.state.foreignArray } locale={{emptyText:"获取中"}} /> : "" }  
+                            {this.mount && this.props.name === "股指期货"?  <Table  pagination={false}  columns={ quotation} dataSource={ this.state.stockArray }  locale={{emptyText:"获取中"}} /> : "" }  
+                            {this.mount && this.props.name === "国内期货"?  <Table  pagination={false} columns={ quotation} dataSource={ this.state.domesticArray }  locale={{emptyText:"获取中"}} /> : "" }  
                         </div>
                     </div>
                 </main>

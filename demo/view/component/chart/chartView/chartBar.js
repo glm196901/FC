@@ -43,7 +43,7 @@ import './chartBar.sass'
             this.state.goodsCode = o.code;
             this.state.hot = Contracts.hot;
             this.state.news = Contracts.new;
-            // console.log(this.state.foreignArray)
+            console.log(this.state.foreignArray)
             Custom.start('customUpdate');
         } else {
             spy('contractsInitial', this.updateContracts, this, Contracts.initial);
@@ -116,7 +116,7 @@ import './chartBar.sass'
             allArray: JSON.parse(JSON.stringify(Custom.allBrief)),
             hot: Contracts.hot,
             news: Contracts.new
-        });
+        },()=>console.log(this.state.domesticArray));
         Custom.start('customUpdate')
     }
 
@@ -160,7 +160,7 @@ import './chartBar.sass'
 
 
      render(){
-         if(this.props.name === "国际期货"){
+         if(this.props.name === 0){
             return(
                 <div className="viewBar">
                    <div  className="viewSelect"  >
@@ -181,12 +181,12 @@ import './chartBar.sass'
                        )
                    }) }
                    </div>
-                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}>
-   
+                   <div   id="chart" className="viewItem" ref={(e)=>this._ref=e}>
+                        
                    </div>
                 </div>
             )
-         }else if(this.props.name === "股指期货"){
+         }else if(this.props.name === 1){
             return(
                 <div className="viewBar">
                    <div  className="viewSelect"  >
@@ -233,10 +233,9 @@ import './chartBar.sass'
                        )
                    }) }
                    </div>
-                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}></div>
-             
-
-              
+                   <div  id="chart" className="viewItem" ref={(e)=>this._ref=e}>
+                   
+                   </div>
                 </div>
             )               
          }
@@ -271,15 +270,15 @@ class ChartBar extends Component {
                     </div>
                     {this.state.names.map( (name,key)=>{
                         return(
-                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}) }  }  >{ name }</div>
+                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}, 
+                                ()=>{ if(this.state.select === 0 ){Chart.swap({code:"GC1908"})}
+                                else if(this.state.select === 1){Chart.swap({code:"IF1907"})}
+                                else{Chart.swap({code:"RU1909"}) } } ) }  }  >{ name }</div>
                         )
                     } )}
                 </div>
-                {this.state.select === 0 ? <ViewBar name="国际期货"></ViewBar> : ""}
-                {this.state.select === 1 ? <ViewBar name="股指期货"></ViewBar> : ""}
-                {this.state.select === 2 ? <ViewBar name="国内期货"></ViewBar> : ""}
-                <ResolutionRatio dynamic={(status)=>this.setState({dynamic: status})}/>
-
+                 <ViewBar  name={this.state.select}></ViewBar> 
+                <ResolutionRatio dynamic={(status)=>this.setState({dynamic: status})} />
             </div>
         )
     }
