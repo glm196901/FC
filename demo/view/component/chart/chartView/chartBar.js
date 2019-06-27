@@ -12,6 +12,8 @@ import ResolutionRatio from '../chartView/resolutionRatio'
 
 import './chartBar.sass'
 
+
+
  class ViewBar extends Component {
 
     constructor(props){
@@ -28,7 +30,7 @@ import './chartBar.sass'
             goodsCode:'',
             itemActive: 0,
             dynamic: 'hide',
-
+            code:""
 
         };
         if (Contracts.initial) {
@@ -91,7 +93,6 @@ import './chartBar.sass'
                 Quote.switch(EVENT.Quote.code)
             }
         }, this);
-       
 
     }
 
@@ -116,7 +117,9 @@ import './chartBar.sass'
             allArray: JSON.parse(JSON.stringify(Custom.allBrief)),
             hot: Contracts.hot,
             news: Contracts.new
-        },()=>console.log(this.state.domesticArray));
+        },
+        // ()=>console.log(this.state.domesticArray)
+        );
         Custom.start('customUpdate')
     }
 
@@ -166,7 +169,8 @@ import './chartBar.sass'
                    <div  className="viewSelect"  >
                    {this.state.foreignArray.map((v, k )=>{
                        return(
-                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)}) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)
+                            ; this.props.getCode(v.code); console.log(v.code)  }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
                                <div className="itemTitle">
                                    {v.name}
                                </div>
@@ -192,7 +196,8 @@ import './chartBar.sass'
                    <div  className="viewSelect"  >
                    {this.state.stockArray.map((v, k )=>{
                        return(
-                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)}) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate);  
+                            ; this.props.getCode(v.code); console.log(v.code)   }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
                                <div className="itemTitle">
                                    {v.name}
                                </div>
@@ -218,7 +223,8 @@ import './chartBar.sass'
                    <div  className="viewSelect"  >
                    {this.state.domesticArray.map((v, k )=>{
                        return(
-                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)}) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)
+                            ; this.props.getCode(v.code);  console.log(v.code)  }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
                                <div className="itemTitle">
                                    {v.name}
                                </div>
@@ -255,8 +261,21 @@ class ChartBar extends Component {
         super(props);
         this.state = {
             names:["国际期货", "股指期货", "国内期货"],
-            select: 0,
+            selectLeft: 0,
             active: true,
+            code:"",
+            foreignArray: [],
+            domesticArray: [],
+            stockArray: [],
+            selfArray: [],
+            allArray: [],
+            select: "",
+            contract:'',
+            name:'',
+            goodsCode:'',
+            itemActive: 0,
+            dynamic: 'hide',
+           
         }
     }
 
@@ -270,14 +289,14 @@ class ChartBar extends Component {
                     </div>
                     {this.state.names.map( (name,key)=>{
                         return(
-                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({select: key}, 
-                                ()=>{ if(this.state.select === 0 ){Chart.swap({code:"GC1908"})}
-                                else if(this.state.select === 1){Chart.swap({code:"IF1907"})}
+                            <div  key={key} className={`marketName ${this.state.selectLeft === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({selectLeft: key}, 
+                                ()=>{ if(this.state.selectLeft === 0 ){Chart.swap({code:"CL1908"}); }
+                                else if(this.state.selectLeft === 1){Chart.swap({code:"IF1907"})}
                                 else{Chart.swap({code:"RU1909"}) } } ) }  }  >{ name }</div>
                         )
                     } )}
                 </div>
-                 <ViewBar  name={this.state.select}></ViewBar> 
+                 <ViewBar   name={this.state.select}></ViewBar> 
                 <ResolutionRatio dynamic={(status)=>this.setState({dynamic: status})} />
             </div>
         )
