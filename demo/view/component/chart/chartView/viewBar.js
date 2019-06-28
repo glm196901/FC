@@ -42,7 +42,7 @@ import './viewBar.sass'
             this.state.goodsCode = o.code;
             this.state.hot = Contracts.hot;
             this.state.news = Contracts.new;
-            console.log(this.state.foreignArray)
+            // console.log(this.state.foreignArray)
             Custom.start('customUpdate');
         } else {
             spy('contractsInitial', this.updateContracts, this, Contracts.initial);
@@ -79,7 +79,7 @@ import './viewBar.sass'
             allArray: JSON.parse(JSON.stringify(Custom.allBrief)),
             hot: Contracts.hot,
             news: Contracts.new
-        },()=>console.log(this.state.foreignArray));
+        });
         Custom.start('customUpdate')
     }
 

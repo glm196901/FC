@@ -14,24 +14,28 @@ import './chartBar.sass'
 
 
 
- class ViewBar extends Component {
 
-    constructor(props){
+
+
+class ChartBar extends Component {
+    constructor(props) {
         super(props);
         this.state = {
+            names:["国际期货", "股指期货", "国内期货"],
+            select: 0,
+            active: true,
+            code:"",
             foreignArray: [],
             domesticArray: [],
             stockArray: [],
             selfArray: [],
             allArray: [],
-            select: "",
             contract:'',
             name:'',
             goodsCode:'',
             itemActive: 0,
             dynamic: 'hide',
-            code:""
-
+            position:{itemActive:{code:""}}
         };
         if (Contracts.initial) {
             this.state.foreignArray = Custom.foreignBrief;
@@ -45,15 +49,13 @@ import './chartBar.sass'
             this.state.goodsCode = o.code;
             this.state.hot = Contracts.hot;
             this.state.news = Contracts.new;
-            console.log(this.state.foreignArray)
+            // console.log(this.state.foreignArray)
             Custom.start('customUpdate');
         } else {
             spy('contractsInitial', this.updateContracts, this, Contracts.initial);
         }
-
-     }
-
-     componentDidMount(){
+    }
+    componentDidMount(){
         spy('customUpdate',this.updateBrief,this);
         EVENT.Quote.whileUpdated(()=>{
             this.setState(EVENT.Quote.getDynamic())
@@ -100,6 +102,7 @@ import './chartBar.sass'
         EVENT.Quote.pullout(this)
         Chart.exit();
 
+
     }
 
 
@@ -118,7 +121,6 @@ import './chartBar.sass'
             hot: Contracts.hot,
             news: Contracts.new
         },
-        // ()=>console.log(this.state.domesticArray)
         );
         Custom.start('customUpdate')
     }
@@ -161,18 +163,21 @@ import './chartBar.sass'
         });
     }
 
+    switchCode = (vcode, k) =>{
+        this.setState({itemActive : k, code:vcode }, ()=>{EVENT.Quote.switch(vcode,EVENT.Quote.simulate)} )
+    }
 
-     render(){
-         if(this.props.name === 0){
+    viewBar(){
+        if(this.state.select === 0){
             return(
                 <div className="viewBar">
                    <div  className="viewSelect"  >
+
                    {this.state.foreignArray.map((v, k )=>{
                        return(
-                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)
-                            ; this.props.getCode(v.code); console.log(v.code)  }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                           <div className="item" key={k} ref="getCode"   onClick={this.switchCode.bind(this,v.code, k)}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
                                <div className="itemTitle">
-                                   {v.name}
+                                   {v.name} 
                                </div>
                                <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
                                    {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
@@ -190,16 +195,17 @@ import './chartBar.sass'
                    </div>
                 </div>
             )
-         }else if(this.props.name === 1){
+         }else if(this.state.select === 1){
+
             return(
                 <div className="viewBar">
                    <div  className="viewSelect"  >
+
                    {this.state.stockArray.map((v, k )=>{
                        return(
-                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate);  
-                            ; this.props.getCode(v.code); console.log(v.code)   }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                           <div className="item" key={k}  onClick={this.switchCode.bind(this,v.code, k)}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
                                <div className="itemTitle">
-                                   {v.name}
+                                   {v.name} 
                                </div>
                                <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
                                    {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
@@ -218,15 +224,18 @@ import './chartBar.sass'
                 </div>
             )               
          }else {
+                
             return(
+            
                 <div className="viewBar">
                    <div  className="viewSelect"  >
+                   {/* {console.log ( this.state.domesticArray[0]) } */}
+
                    {this.state.domesticArray.map((v, k )=>{
                        return(
-                           <div className="item" key={k}  onClick={()=>{ this.setState({itemActive : k }, ()=>{EVENT.Quote.switch(v.code,EVENT.Quote.simulate)
-                            ; this.props.getCode(v.code);  console.log(v.code)  }) }}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
+                           <div className="item" key={k}  onClick={this.switchCode.bind(this,v.code, k)}  className={`item ${this.state.itemActive === k ? 'bottomColor':'bottomNoColor'}`}   >
                                <div className="itemTitle">
-                                   {v.name}
+                                   {v.name} 
                                </div>
                                <div className={`itemPrice ${v.isUp === true ? 'up' : 'down' }`}  >
                                    {v.isUp=== true ? v.price + "⬆"  :  v.price +"⬇" }
@@ -244,41 +253,8 @@ import './chartBar.sass'
                    </div>
                 </div>
             )               
-         }
-
-     }
-
-
-
-
-
-
- }
-
-
-class ChartBar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            names:["国际期货", "股指期货", "国内期货"],
-            selectLeft: 0,
-            active: true,
-            code:"",
-            foreignArray: [],
-            domesticArray: [],
-            stockArray: [],
-            selfArray: [],
-            allArray: [],
-            select: "",
-            contract:'',
-            name:'',
-            goodsCode:'',
-            itemActive: 0,
-            dynamic: 'hide',
-           
-        }
+         }       
     }
-
 
     render() {
         return (
@@ -289,14 +265,21 @@ class ChartBar extends Component {
                     </div>
                     {this.state.names.map( (name,key)=>{
                         return(
-                            <div  key={key} className={`marketName ${this.state.selectLeft === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ ()=>{this.setState({selectLeft: key}, 
-                                ()=>{ if(this.state.selectLeft === 0 ){Chart.swap({code:"CL1908"}); }
-                                else if(this.state.selectLeft === 1){Chart.swap({code:"IF1907"})}
-                                else{Chart.swap({code:"RU1909"}) } } ) }  }  >{ name }</div>
+                            <div  key={key} className={`marketName ${this.state.select === key ? "marketIsStyle" : "marketNoStyle" } `} onClick={ 
+                                ()=>
+                                
+                                {this.setState({select: key}, 
+                                ()=>{ if(this.state.select === 0 ){ Chart.swap({code:this.state.foreignArray[this.state.itemActive].code})}
+                                else if(this.state.select === 1){Chart.swap({code:this.state.stockArray[this.state.itemActive].code})}
+                                else{Chart.swap({code:this.state.domesticArray[this.state.itemActive].code}) } } 
+                       
+                                ) } 
+                             }  >{ name }</div>
                         )
                     } )}
                 </div>
-                 <ViewBar   name={this.state.select}></ViewBar> 
+
+                {this.viewBar()}
                 <ResolutionRatio dynamic={(status)=>this.setState({dynamic: status})} />
             </div>
         )

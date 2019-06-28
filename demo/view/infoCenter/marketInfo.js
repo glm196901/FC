@@ -45,11 +45,11 @@ class News extends Component{
                     animate: animate
                 });
                 this.newsList = result.newsList;
-                console.log(this.newsList)
+                // console.log(this.newsList)
                 this.setState({date:[this.newsList[0].date, this.newsList[7].date]});
                 let data = this.state.list.concat(this.newsList);
                 this.setState({list: data, lastestId: data[0].id});
-                console.log(this.state.date)
+                // console.log(this.state.date)
                 this.forceUpdate()
                 resolve()
             } catch (error) {
