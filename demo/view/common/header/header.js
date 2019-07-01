@@ -12,8 +12,6 @@ import { Menu, Dropdown, Icon } from 'antd';
 
 // const ip = "http://localhost:3000"
 const ip = window.location.origin
-
-
 const introduce = (
     <Menu>
       <Menu.Item>
@@ -67,7 +65,7 @@ class Header extends Component {
                     <img className="cfLogo" src={require("../../../assets/images/cfLogo.png")} />
                     <ul className={"navBar"}>
                         <li>
-                            <NavLink exact to="/">首页</NavLink>
+                              <NavLink exact to="/">首页</NavLink>
                         </li>
                         <li>
                            <Dropdown overlay={introduce}>

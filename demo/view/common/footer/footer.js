@@ -4,13 +4,12 @@ import {BrowserRouter as Router, Route, NavLink, Link, Switch,Redirect} from 're
 
 
 import './footer.sass';
-import Home from '../../home/home'
 
 const navItems = [
     // ,list2:'公司动态', list2Add: '/introduce/dynamics'
     {title:'公司介绍', add:"/introduce/brief",list1:'公司优势',list1Add:'/introduce/advantages' },
-    {title:'行情中心', add:"/marketcenter",  list1:'国际期货', list1Add:'/marketcenter/international', list2:'股指期货', list2Add:'/marketcenter/stockindex', list3:'国内期货', list3Add:'/marketcenter/domestic' },
-    {title:'资讯中心', add:"/infocenter", list1:'行业资讯', list1Add:'/infocenter/marketinfo', list2:'财经日历', list2Add:'/infocenter/dailynews', list3:'每周洞察' , list3Add:'/infocenter/everyweek' },
+    {title:'行情中心', add:"/marketcenter/international",  list1:'国际期货', list1Add:'/marketcenter/international', list2:'股指期货', list2Add:'/marketcenter/stockindex', list3:'国内期货', list3Add:'/marketcenter/domestic' },
+    {title:'资讯中心', add:"/infocenter/marketinfo", list1:'行业资讯', list1Add:'/infocenter/marketinfo', list2:'财经日历', list2Add:'/infocenter/dailynews', list3:'每周洞察' , list3Add:'/infocenter/everyweek' },
     {title:'下载中心', add:"/download", list1:'财经期货有限公司：贵金属|期货', list2:'客服QQ：2865002835',  list3:'地 址：香港岛薄扶林道东一单元', list4:'邮 箱：info@caifuqihuo.com'},
 ]
 
